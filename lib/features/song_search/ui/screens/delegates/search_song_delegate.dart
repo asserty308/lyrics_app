@@ -55,7 +55,7 @@ class SearchSongDelegate extends SearchDelegate {
                 title: Text('${song.artist.name} - ${song.title}'),
                 subtitle: Text('${song.album.title}'),
                 leading: CircleAvatar(
-                  child: Image.network(song.album.coverMedium),
+                  child: Image.network(song.album.coverSmall),
                   backgroundColor: Colors.transparent,
                 ),
                 onTap: () {
