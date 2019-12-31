@@ -11,9 +11,11 @@ dependencies:
     sdk: flutter
 
   cupertino_icons:
+  curved_navigation_bar:
   
   flutter_core:
-    path: '../flutter_core/'
+    git:
+      url: git://github.com/asserty308/flutter_core.git
 
 dev_dependencies:
   flutter_test:

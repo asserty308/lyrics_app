@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
@@ -28,13 +29,35 @@ class _LyricsScreenState extends State<LyricsScreen> {
       appBar: AppBar(
         title: Text('${widget.artist} - ${widget.song}'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: SingleChildScrollView(
-          child: _lyrics.isEmpty ? CenterProgressIndicator() : CenterText(_lyrics,
-            style: Theme.of(context).textTheme.title,
+      body: Stack(
+        children: <Widget>[ 
+          Positioned.fill(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 90), // content inset
+              child: _lyrics.isEmpty ? CenterProgressIndicator() : CenterText(
+                _lyrics,
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
           ),
-        ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: CurvedNavigationBar(
+              color: Colors.blue,
+              backgroundColor: Colors.transparent,
+              items: <Widget>[
+                Icon(Icons.favorite, size: 30, color: Colors.white,),
+                Icon(Icons.search, size: 30, color: Colors.white,),
+                Icon(Icons.settings, size: 30, color: Colors.white,),
+              ],
+              onTap: (index) {
+
+              },
+            ),
+          )
+        ],
       ),
     );
   }

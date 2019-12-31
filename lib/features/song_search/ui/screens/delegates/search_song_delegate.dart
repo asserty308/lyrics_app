@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
-import 'package:flutter_core/utility/routing/routing.dart';
-import 'package:lyrics/features/lyrics/ui/screens/lyrics_screen.dart';
 import 'package:lyrics/features/song_search/data/datasources/deezer_api.dart';
 import 'package:lyrics/features/song_search/data/models/song_data_model.dart';
+import 'package:lyrics/features/song_search/ui/widgets/song_list_tile.dart';
 
 class SearchSongDelegate extends SearchDelegate {
+  final _api = DeezerApi();
+
   @override
   List<Widget> buildActions(BuildContext context) {
     // add a 'clear query' button
@@ -36,36 +38,21 @@ class SearchSongDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) => showSearchResults();
 
   Widget showSearchResults() {
-    final api = DeezerApi();
-    final songs = api.search(query);
+    final songs = _api.search(query);
 
     return FutureBuilder<List<SongModel>>(
       future: songs,
       builder: (BuildContext context, AsyncSnapshot<List<SongModel>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          var widgetList = <Widget>[];
+          final widgetList = <Widget>[];
 
           if (snapshot.data == null) {
             return CenterText('Nothing found');
           }
 
-          for (var song in snapshot.data) {
+          for (final song in snapshot.data) {
             widgetList.add(
-              ListTile(
-                title: Text('${song.artist.name} - ${song.title}'),
-                subtitle: Text('${song.album.title}'),
-                leading: CircleAvatar(
-                  child: Image.network(song.album.coverSmall),
-                  backgroundColor: Colors.transparent,
-                ),
-                onTap: () {
-                  // show lyrics screen
-                  showScreen(context, LyricsScreen(
-                    artist: song.artist.name, 
-                    song: song.title
-                  ));
-                },
-              )
+              SongListTile(song: song)
             );
           }
 
@@ -78,9 +65,7 @@ class SearchSongDelegate extends SearchDelegate {
         }
 
         // show progress indicator when search results aren't available
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+        return CenterProgressIndicator();
       },
     );
   }

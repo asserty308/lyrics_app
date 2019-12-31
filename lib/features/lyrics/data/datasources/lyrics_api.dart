@@ -8,7 +8,7 @@ class LyricsApi {
   Future<dynamic> fetchJSON(String path) async {
     return _api.fetchJSON(path);
   }
-
+  
   Future<LyricsModel> fetchLyrics(String artist, String song) async {
     final result = await _api.fetchJSON('$artist/$song');
     return LyricsModel.fromJson(result);
