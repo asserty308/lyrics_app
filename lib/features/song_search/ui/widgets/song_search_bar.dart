@@ -40,11 +40,11 @@ class _SongSearchBarState extends State<SongSearchBar> {
   }
 
   _clearText() {
+    _controller.clear();
     widget.onChanged('');
 
     setState(() {
       _hideClearIcon = true;
-      _controller.clear();
     });
   }
 
@@ -53,7 +53,7 @@ class _SongSearchBarState extends State<SongSearchBar> {
       _clearText();
       return;
     }
-    
+
     widget.onChanged(text);
 
     setState(() {
