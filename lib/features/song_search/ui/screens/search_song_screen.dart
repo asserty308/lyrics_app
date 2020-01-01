@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lyrics/features/song_search/ui/screens/delegates/search_song_delegate.dart';
+import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
+import 'package:flutter_core/ui/widgets/center_text.dart';
+import 'package:flutter_core/utility/keyboard.dart';
+import 'package:lyrics/features/song_search/data/datasources/deezer_api.dart';
+import 'package:lyrics/features/song_search/data/models/song_data_model.dart';
+import 'package:lyrics/features/song_search/ui/widgets/song_list_tile.dart';
+import 'package:lyrics/features/song_search/ui/widgets/song_search_bar.dart';
 
 // Search API:
 // https://api.deezer.com/search?q=rammstein%20sonne&limit=5
@@ -13,23 +19,63 @@ class SearchSongScreen extends StatefulWidget {
 }
 
 class _SearchSongScreenState extends State<SearchSongScreen> {
-  @override
-  void initState() {
-    super.initState();
+  final _api = DeezerApi();
 
-    // run 'afterFirstlayout' after first build()
-    WidgetsBinding.instance.addPostFrameCallback((_) => _afterFirstlayout(context));
-  }
-
+  String _currentQuery = '';
+  
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SafeArea(
+      child: Column(
+        children: <Widget>[
+          SongSearchBar(
+            onChanged: (text) => onTextChange(text),
+          ),
+          Expanded(
+            child: showSearchResults(_currentQuery),
+          )
+        ],
+      ),
+    );
   }
 
-  void _afterFirstlayout(BuildContext context) {
-    showSearch(
-      context: context,
-      delegate: SearchSongDelegate()
+  onTextChange(String text) {
+    setState(() {
+      _currentQuery = text;
+    });
+  }
+
+  Widget showSearchResults(String query) {
+    final songs = _api.search(query);
+
+    return FutureBuilder<List<SongModel>>(
+      future: songs,
+      builder: (BuildContext context, AsyncSnapshot<List<SongModel>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final widgetList = <Widget>[];
+
+          if (snapshot.data == null) {
+            return CenterText('Nothing found');
+          }
+
+          for (final song in snapshot.data) {
+            widgetList.add(
+              SongListTile(song: song)
+            );
+          }
+
+          return ListView.builder(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 90),
+            itemCount: widgetList.length,
+            itemBuilder: (context, index) {
+              return widgetList[index];
+            }
+          );
+        }
+
+        // show progress indicator when search results aren't available
+        return CenterProgressIndicator();
+      },
     );
   }
 }
