@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
@@ -28,6 +27,13 @@ class _LyricsScreenState extends State<LyricsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.artist} - ${widget.song}'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.favorite_border, color: Colors.white,),
+            onPressed: () {
+            },
+          )
+        ],
       ),
       body: _lyrics.isEmpty ? CenterProgressIndicator() : SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(8, 8, 8, 90), // content inset
