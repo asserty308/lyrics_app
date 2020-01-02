@@ -3,6 +3,7 @@ import 'package:flutter_core/modules/translation/data/translation_api.dart';
 import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
 import 'package:lyrics/features/lyrics/data/datasources/lyrics_api.dart';
+import 'package:lyrics/main.dart';
 
 class LyricsScreen extends StatefulWidget {
   LyricsScreen({this.artist, this.song});
@@ -72,7 +73,7 @@ class _LyricsScreenState extends State<LyricsScreen> {
   }
 
   _translateLyrics() async {
-    var response = await _translationApi.translateText(_originalLyrics, Localizations.localeOf(context));
+    var response = await _translationApi.translateText(_originalLyrics, globalDeviceLocale);
 
     if (response == null || response.isEmpty) {
       response = 'An error occured';
