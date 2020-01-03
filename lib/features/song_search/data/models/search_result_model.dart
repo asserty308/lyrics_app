@@ -1,4 +1,4 @@
-import 'package:lyrics/features/song_search/data/models/song_data_model.dart';
+import 'package:lyrics/features/song_search/data/models/song_model.dart';
 
 class SearchResultModel {
   List<SongModel> data;

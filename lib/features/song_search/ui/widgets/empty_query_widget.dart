@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_core/modules/i18n/app_localization.dart';
+import 'package:flutter_core/utility/routing/routing.dart';
 import 'package:lyrics/features/song_search/data/datasources/deezer_api.dart';
 import 'package:lyrics/features/song_search/data/models/genre_data_model.dart';
-import 'package:lyrics/features/song_search/data/models/song_data_model.dart';
+import 'package:lyrics/features/song_search/data/models/song_model.dart';
+import 'package:lyrics/features/song_search/ui/screens/charts_screen.dart';
 
 class EmptyQueryWidget extends StatefulWidget {
   @override
@@ -9,16 +12,14 @@ class EmptyQueryWidget extends StatefulWidget {
 }
 
 class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
-  final _api = DeezerApi();
-
   var _genres = <GenreDataModel>[];
   var _latestSongs = <SongModel>[];
 
   Widget get _latestSearches {
-    return Column(
+    return _latestSongs.isEmpty ? Container() : Column(
       children: <Widget>[
         Text(
-          'Latest searches',
+          AppLocalization.of(context).translate('latest_searches'),
           style: Theme.of(context).textTheme.headline,
         ),
       ],
@@ -29,7 +30,7 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
     return Column(
       children: <Widget>[
         Text(
-          'Search charts',
+          AppLocalization.of(context).translate('search_charts'),
           style: Theme.of(context).textTheme.headline,
         ),
         Padding(
@@ -41,27 +42,31 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
             mainAxisSpacing: 8,
             crossAxisCount: 2,
             children: List.generate(_genres.length, (index) {
-              return Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer, // prevents children from overlapping
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                color: Colors.blueAccent,
-                child: Stack(
-                  children: <Widget>[
-                    Image.network(_genres[index].pictureMedium),
-                    Container(color: Colors.black26,),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          _genres[index].name,
-                          style: Theme.of(context).textTheme.headline.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+              final genre = _genres[index];
+
+              return InkWell(
+                onTap: () => showScreen(context, ChartsScreen(genreId: genre.id, genreName: genre.name)),
+                child: Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer, // prevents children from overlapping
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  child: Stack(
+                    children: <Widget>[
+                      Image.network(genre.pictureMedium),
+                      Container(color: Colors.black26,),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            genre.name,
+                            style: Theme.of(context).textTheme.headline.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             }),
@@ -92,7 +97,7 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
   }
 
   _fetchGenres() async {
-    _genres = await _api.getAllGenres();
+    _genres = await deezerApi.getAllGenres();
     setState(() {});
   }
 }

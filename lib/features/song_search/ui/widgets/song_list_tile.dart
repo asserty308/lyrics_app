@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_core/utility/routing/routing.dart';
 import 'package:lyrics/features/lyrics/ui/screens/lyrics_screen.dart';
-import 'package:lyrics/features/song_search/data/models/song_data_model.dart';
+import 'package:lyrics/features/song_search/data/models/song_model.dart';
 
 class SongListTile extends StatelessWidget {
   const SongListTile({

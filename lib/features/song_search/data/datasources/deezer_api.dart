@@ -2,7 +2,9 @@ import 'package:flutter_core/web/base_api.dart';
 import 'package:lyrics/features/song_search/data/models/all_genres_model.dart';
 import 'package:lyrics/features/song_search/data/models/genre_data_model.dart';
 import 'package:lyrics/features/song_search/data/models/search_result_model.dart';
-import 'package:lyrics/features/song_search/data/models/song_data_model.dart';
+import 'package:lyrics/features/song_search/data/models/song_model.dart';
+
+final deezerApi = DeezerApi();
 
 class DeezerApi extends BaseApi {
   DeezerApi() : super('api.deezer.com');
@@ -17,6 +19,13 @@ class DeezerApi extends BaseApi {
   Future<List<GenreDataModel>> getAllGenres() async {
     final result = await fetchJSON('genre');
     final genreData = AllGenresModel.fromJson(result);
+    return genreData.data;
+  }
+
+  Future<List<SongModel>> getGenreCharts(int genreId) async {
+    final params = { 'limit':'100' };
+    final result = await fetchJSON('chart/$genreId/tracks', params);
+    final genreData = SearchResultModel.fromJson(result);
     return genreData.data;
   }
 }

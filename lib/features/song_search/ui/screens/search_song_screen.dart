@@ -16,7 +16,6 @@ class SearchSongScreen extends StatefulWidget {
 }
 
 class _SearchSongScreenState extends State<SearchSongScreen> {
-  final _api = DeezerApi();
   String _currentQuery = '';
   
   @override
@@ -46,7 +45,7 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
   }
 
   Widget buildSearchResults(String query) {
-    final songs = _api.search(query);
+    final songs = deezerApi.search(query);
     return SearchResultsList(futureSongs: songs);
   }
 }
