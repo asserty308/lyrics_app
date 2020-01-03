@@ -1,17 +1,17 @@
 import 'package:lyrics/features/song_search/data/models/song_data_model.dart';
 
-class DeezerResponseModel {
+class SearchResultModel {
   List<SongModel> data;
   int total;
   String next;
 
-  DeezerResponseModel({
+  SearchResultModel({
     this.data, 
     this.total, 
     this.next
   });
 
-  DeezerResponseModel.fromJson(Map<String, dynamic> json) {
+  SearchResultModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = new List<SongModel>();
       json['data'].forEach((v) {

@@ -15,9 +15,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lyrics App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       debugShowCheckedModeBanner: false,
       localeResolutionCallback: (deviceLocale, supportedLocales) {
         // assign device locale for proper lyrics translation
