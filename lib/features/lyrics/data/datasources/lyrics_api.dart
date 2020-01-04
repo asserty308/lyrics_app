@@ -9,7 +9,11 @@ class LyricsApi extends BaseApi {
     artist = artist.replaceAll('/', '');
     song = song.replaceAll('/', '');
 
-    final result = await fetchJSON('$artist/$song');
-    return LyricsModel.fromJson(result);
+    try {
+      final result = await fetchJSON('$artist/$song');
+      return LyricsModel.fromJson(result);
+    } catch (e) {
+      return null;
+    }
   }
 }

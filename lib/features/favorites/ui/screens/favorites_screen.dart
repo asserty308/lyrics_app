@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
-import 'package:flutter_core/modules/i18n/context_localization.dart';
+import 'package:flutter_core/i18n/context_localization.dart';
 
 class FavoritesScreen extends StatelessWidget {
   @override

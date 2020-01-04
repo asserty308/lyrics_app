@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_core/modules/i18n/context_localization.dart';
+import 'package:flutter_core/i18n/context_localization.dart';
 import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
 import 'package:lyrics/features/song_search/data/models/song_model.dart';

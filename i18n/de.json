@@ -3,5 +3,6 @@
     "search_charts": "Charts durchsuchen",
     "nothing_found": "Nichts gefunden",
     "song_searchbar_hint": "Künstler / Songtitel",
-    "under_construction": "In Arbeit"
+    "under_construction": "In Arbeit",
+    "error_occured": "Ein Fehler ist aufgetreten"
 }

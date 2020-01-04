@@ -81,10 +81,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d59dcd1c58c1f979315b009af02468f917539544
+      resolved-ref: f8357d86240a6659aea176972103ec3f7d04ef9a
       url: "git://github.com/asserty308/flutter_core.git"
     source: git
-    version: "0.0.6"
+    version: "0.0.7"
   flutter_localizations:
     dependency: "direct main"
     description: flutter

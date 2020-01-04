@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_core/modules/translation/data/translation_api.dart';
+import 'package:flutter_core/cloud_translation/data/translation_api.dart';
 import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
+import 'package:flutter_core/i18n/context_localization.dart';
+import 'package:lyrics/core/i18n/localization_helper.dart';
 import 'package:lyrics/features/lyrics/data/datasources/lyrics_api.dart';
-import 'package:lyrics/main.dart';
 
 class LyricsScreen extends StatefulWidget {
   LyricsScreen({this.artist, this.song});
@@ -53,7 +54,7 @@ class _LyricsScreenState extends State<LyricsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar,
-      body: _displayedLyrics.isEmpty ? CenterProgressIndicator() : SingleChildScrollView(
+      body: _displayedLyrics == null ? CenterText(context.localize('error_occured')) : _displayedLyrics.isEmpty ? CenterProgressIndicator() : SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(8, 8, 8, 90), // content inset
         child: CenterText(
           _displayedLyrics,
@@ -65,18 +66,25 @@ class _LyricsScreenState extends State<LyricsScreen> {
 
   _fetchLyrics() async {
     final result = await _lyricsApi.fetchLyrics(widget.artist, widget.song);
+
+    if (result == null) {
+      setState(() {
+        _originalLyrics = null;
+        _translatedLyrics = null;
+      });
+      return;
+    }
+
     _originalLyrics = result.lyrics;
     await _translateLyrics();
-
-    setState(() {
-    });
+    setState(() {});
   }
 
   _translateLyrics() async {
-    var response = await _translationApi.translateText(_originalLyrics, globalDeviceLocale);
+    var response = await _translationApi.translateText(_originalLyrics, MyLocalization.deviceLocale);
 
     if (response == null || response.isEmpty) {
-      response = 'An error occured';
+      response = context.localize('error_occured');
     }
 
     _translatedLyrics = response;
