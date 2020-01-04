@@ -1,7 +1,7 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/utility/extensions/int_duration.dart';
 import 'package:flutter_core/utility/keyboard.dart';
+import 'package:lyrics/core/ui/widgets/navbar/curved_navigation_bar.dart';
 import 'package:lyrics/features/favorites/ui/screens/favorites_screen.dart';
 import 'package:lyrics/features/settings/ui/screens/settings_screen.dart';
 import 'package:lyrics/features/song_search/ui/screens/search_song_screen.dart';

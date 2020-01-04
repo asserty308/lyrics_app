@@ -4,12 +4,7 @@ import 'package:lyrics/core/ui/screens/main_screen.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +12,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       supportedLocales: MyLocalization.supportedLocales,
       localizationsDelegates: MyLocalization.localizationsDelegates,
-      localeResolutionCallback: (deviceLocale, supportedLocales) => MyLocalization.localeResolutionCallback(deviceLocale, supportedLocales),
+      localeResolutionCallback: (device, supported) => MyLocalization.localeResolutionCallback(device, supported),
+      theme: ThemeData.dark(),
       home: MainScreen(),
     );
   }

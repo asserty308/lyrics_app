@@ -1,7 +1,7 @@
 name: lyrics
 description: An app to search for lyrics.
 
-version: 0.0.7+7
+version: 0.0.8+8
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -18,7 +18,6 @@ dependencies:
       url: git://github.com/asserty308/flutter_core.git
 
   cupertino_icons:
-  curved_navigation_bar:
 
 dev_dependencies:
   flutter_test:

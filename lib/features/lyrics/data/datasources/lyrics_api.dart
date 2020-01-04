@@ -6,8 +6,8 @@ class LyricsApi extends BaseApi {
   
   Future<LyricsModel> fetchLyrics(String artist, String song) async {
     // remove '/' as it builds an invalid request
-    artist = artist.replaceAll('/', '');
-    song = song.replaceAll('/', '');
+    artist = artist.replaceAll('/', '').replaceAll('?', '').replaceAll('&', '');
+    song = song.replaceAll('/', '').replaceAll('?', '').replaceAll('&', '');
 
     try {
       final result = await fetchJSON('$artist/$song');
