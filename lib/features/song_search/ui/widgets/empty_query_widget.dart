@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_core/modules/i18n/app_localization.dart';
+import 'package:flutter_core/modules/i18n/context_localization.dart';
 import 'package:flutter_core/utility/routing/routing.dart';
 import 'package:lyrics/features/song_search/data/datasources/deezer_api.dart';
 import 'package:lyrics/features/song_search/data/models/genre_data_model.dart';
@@ -19,7 +19,7 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
     return _latestSongs.isEmpty ? Container() : Column(
       children: <Widget>[
         Text(
-          AppLocalization.of(context).translate('latest_searches'),
+          context.localize('latest_searches'),
           style: Theme.of(context).textTheme.headline,
         ),
       ],
@@ -30,7 +30,7 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
     return Column(
       children: <Widget>[
         Text(
-          AppLocalization.of(context).translate('search_charts'),
+          context.localize('search_charts'),
           style: Theme.of(context).textTheme.headline,
         ),
         Padding(
@@ -45,34 +45,42 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
               final genre = _genres[index];
 
               return InkWell(
-                onTap: () => showScreen(context, ChartsScreen(genreId: genre.id, genreName: genre.name)),
-                child: Card(
-                  clipBehavior: Clip.antiAliasWithSaveLayer, // prevents children from overlapping
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: Stack(
-                    children: <Widget>[
-                      Image.network(genre.pictureMedium),
-                      Container(color: Colors.black26,),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Text(
-                            genre.name,
-                            style: Theme.of(context).textTheme.headline.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                onTap: () => showScreen(context, ChartsScreen(
+                  genreId: genre.id, 
+                  genreName: genre.name
+                )),
+                child: buildGenreCard(genre),
               );
             }),
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildGenreCard(GenreDataModel genre) {
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer, // prevents children from overlapping
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Stack(
+        children: <Widget>[
+          Image.network(genre.pictureMedium),
+          Container(color: Colors.black26,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Text(
+                genre.name,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

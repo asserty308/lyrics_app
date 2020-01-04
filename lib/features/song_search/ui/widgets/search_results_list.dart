@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_core/modules/i18n/app_localization.dart';
+import 'package:flutter_core/modules/i18n/context_localization.dart';
 import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
 import 'package:lyrics/features/song_search/data/models/song_model.dart';
@@ -22,7 +22,7 @@ class SearchResultsList extends StatelessWidget {
 
           // Inform user when no data has been found
           if (snapshot.data == null || snapshot.data.isEmpty) {
-            return CenterText(AppLocalization.of(context).translate('nothing_found'));
+            return CenterText(context.localize('nothing_found'));
           }
 
           // Create ListTiles from the song datw

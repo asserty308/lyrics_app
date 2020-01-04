@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_core/modules/i18n/context_localization.dart';
 
 class SongSearchBar extends StatefulWidget {
   const SongSearchBar({
@@ -25,9 +26,13 @@ class _SongSearchBarState extends State<SongSearchBar> {
         textAlign: TextAlign.center,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Artist / Songtitle',
+          hintText: context.localize('song_searchbar_hint'),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
+          ),
+          prefixIcon: _hideClearIcon ? null : IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => _clearText(),
           ),
           suffixIcon: _hideClearIcon ? null : IconButton(
             icon: Icon(Icons.clear),

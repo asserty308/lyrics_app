@@ -1,5 +1,7 @@
 {
     "latest_searches": "Latest searches",
     "search_charts": "Search chars",
-    "nothing_found": "Nothing found"
+    "nothing_found": "Nothing found",
+    "song_searchbar_hint": "Artist / Songtitle",
+    "under_construction": "Under construction"
 }
