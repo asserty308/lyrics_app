@@ -4,12 +4,14 @@ import 'package:flutter_core/ui/widgets/center_progress_indicator.dart';
 import 'package:flutter_core/ui/widgets/center_text.dart';
 import 'package:flutter_core/i18n/context_localization.dart';
 import 'package:lyrics/core/i18n/localization_helper.dart';
+import 'package:lyrics/features/favorites/data/datasources/favorites_table_provider.dart';
 import 'package:lyrics/features/lyrics/data/datasources/lyrics_api.dart';
+import 'package:lyrics/features/song_search/data/models/song_model.dart';
 
 class LyricsScreen extends StatefulWidget {
-  LyricsScreen({this.artist, this.song});
+  LyricsScreen({this.song});
 
-  final String artist, song;
+  final SongModel song;
 
   @override
   _LyricsScreenState createState() => _LyricsScreenState();
@@ -21,6 +23,7 @@ class _LyricsScreenState extends State<LyricsScreen> {
   var _originalLyrics = '';
   var _translatedLyrics = '';
   var _showTranslation = false;
+  var _isFavorite = false;
 
   String get _displayedLyrics {
     return _showTranslation ? _translatedLyrics : _originalLyrics;
@@ -28,13 +31,12 @@ class _LyricsScreenState extends State<LyricsScreen> {
 
   AppBar get _appBar {
     return AppBar(
-      title: Text('${widget.song}'),
+      title: Text('${widget.song.title}'),
       backgroundColor: Color.fromARGB(255, 1, 1, 1),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.favorite_border, color: Colors.white,),
-          onPressed: () {
-          },
+          icon: _isFavorite ? Icon(Icons.favorite, color: Colors.red) : Icon(Icons.favorite_border, color: Colors.white,),
+          onPressed: () => _favoriteButtonPressed(),
         ),
         IconButton(
           icon: Icon(Icons.translate, color: _showTranslation ? Colors.blue : Colors.white),
@@ -47,7 +49,8 @@ class _LyricsScreenState extends State<LyricsScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchLyrics();
+    _initializeUI();
+    _fetchAndTranslate();
   }
 
   @override
@@ -64,8 +67,16 @@ class _LyricsScreenState extends State<LyricsScreen> {
     );
   }
 
-  _fetchLyrics() async {
-    final result = await _lyricsApi.fetchLyrics(widget.artist, widget.song);
+  _initializeUI() async {
+    // favorite state
+    _isFavorite = await FavoritesTableProvider.table.contains(widget.song);
+    setState(() {});
+  }
+
+  /// Fetch lyrics, translate lyrics
+  _fetchAndTranslate() async {
+    // lyrics
+    final result = await _lyricsApi.fetchLyrics(widget.song.artist.name, widget.song.title);
 
     if (result == null) {
       setState(() {
@@ -75,8 +86,10 @@ class _LyricsScreenState extends State<LyricsScreen> {
       return;
     }
 
+    // translate
     _originalLyrics = result.lyrics;
     await _translateLyrics();
+    
     setState(() {});
   }
 
@@ -94,5 +107,18 @@ class _LyricsScreenState extends State<LyricsScreen> {
     setState(() {
       _showTranslation = !_showTranslation;
     });
+  }
+
+  _favoriteButtonPressed() async {
+    _isFavorite = !_isFavorite;
+    if (_isFavorite) {
+      // add
+      await FavoritesTableProvider.table.insert(widget.song);
+    } else {
+      // remove
+      await FavoritesTableProvider.table.delete(widget.song);
+    }
+
+    setState(() {});
   }
 }

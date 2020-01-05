@@ -23,8 +23,7 @@ class SongListTile extends StatelessWidget {
       onTap: () {
         // show lyrics screen
         showScreen(context, LyricsScreen(
-          artist: song.artist.name, 
-          song: song.title,
+          song: song,
         ));
       },
     );

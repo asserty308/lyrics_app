@@ -18,6 +18,8 @@ dependencies:
       url: git://github.com/asserty308/flutter_core.git
 
   cupertino_icons:
+  sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:

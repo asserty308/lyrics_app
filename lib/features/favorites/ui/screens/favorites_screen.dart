@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_core/ui/widgets/center_text.dart';
-import 'package:flutter_core/i18n/context_localization.dart';
+import 'package:lyrics/features/favorites/data/datasources/favorites_table_provider.dart';
+import 'package:lyrics/features/song_search/ui/widgets/search_results_list.dart';
 
 class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CenterText(context.localize('under_construction'));
+    return SearchResultsList(
+      futureSongs: FavoritesTableProvider.table.getAll(),
+    );
   }
 }
