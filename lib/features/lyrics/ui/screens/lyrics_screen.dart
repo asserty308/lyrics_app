@@ -46,6 +46,25 @@ class _LyricsScreenState extends State<LyricsScreen> {
     );
   }
 
+  /// Screen body handles different states: Error, Loading and ShowLyrics
+  Widget get _body {
+    if (_displayedLyrics == null) {
+      return CenterText(context.localize('error_occured'));
+    }
+
+    if (_displayedLyrics.isEmpty) {
+      return CenterProgressIndicator();
+    }
+    
+    return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(8, 8, 8, 90), // content inset
+      child: CenterText(
+        _displayedLyrics,
+        style: Theme.of(context).textTheme.title,
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,13 +76,7 @@ class _LyricsScreenState extends State<LyricsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar,
-      body: _displayedLyrics == null ? CenterText(context.localize('error_occured')) : _displayedLyrics.isEmpty ? CenterProgressIndicator() : SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(8, 8, 8, 90), // content inset
-        child: CenterText(
-          _displayedLyrics,
-          style: Theme.of(context).textTheme.title,
-        ),
-      ),
+      body: _body,
     );
   }
 
@@ -89,7 +102,7 @@ class _LyricsScreenState extends State<LyricsScreen> {
     // translate
     _originalLyrics = result.lyrics;
     await _translateLyrics();
-    
+
     setState(() {});
   }
 
@@ -111,6 +124,7 @@ class _LyricsScreenState extends State<LyricsScreen> {
 
   _favoriteButtonPressed() async {
     _isFavorite = !_isFavorite;
+    
     if (_isFavorite) {
       // add
       await FavoritesTableProvider.table.insert(widget.song);
