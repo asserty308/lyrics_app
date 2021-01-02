@@ -93,7 +93,7 @@ class FavoritesTableProvider {
   }
 
   Future<List<SongModel>> search(String query) async {
-    final filteredSongs = List<SongModel>();
+    final filteredSongs = <SongModel>[];
     final lowerQuery = query.toLowerCase();
 
     if (lowerQuery.isEmpty) {

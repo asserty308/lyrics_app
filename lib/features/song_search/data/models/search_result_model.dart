@@ -13,9 +13,9 @@ class SearchResultModel {
 
   SearchResultModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<SongModel>();
+      data = <SongModel>[];
       json['data'].forEach((v) {
-        data.add(new SongModel.fromJson(v));
+        data.add(SongModel.fromJson(v));
       });
     }
     total = json['total'];

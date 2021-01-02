@@ -20,7 +20,7 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
       children: <Widget>[
         Text(
           context.localize('latest_searches'),
-          style: Theme.of(context).textTheme.headline,
+          style: Theme.of(context).textTheme.headline5,
         ),
       ],
     );
@@ -31,7 +31,7 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
       children: <Widget>[
         Text(
           context.localize('search_charts'),
-          style: Theme.of(context).textTheme.headline,
+          style: Theme.of(context).textTheme.headline5,
         ),
         Padding(
           padding: EdgeInsets.all(8),
@@ -72,7 +72,7 @@ class _EmptyQueryWidgetState extends State<EmptyQueryWidget> {
               child: Text(
                 genre.name,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline.copyWith(
+                style: Theme.of(context).textTheme.headline5.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),

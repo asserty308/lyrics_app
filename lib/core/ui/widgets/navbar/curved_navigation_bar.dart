@@ -101,7 +101,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
       color: widget.backgroundColor,
       height: widget.height,
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           // Highlighted icon

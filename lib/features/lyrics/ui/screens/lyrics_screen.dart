@@ -60,7 +60,7 @@ class _LyricsScreenState extends State<LyricsScreen> {
       padding: EdgeInsets.fromLTRB(8, 8, 8, 90), // content inset
       child: CenterText(
         _displayedLyrics,
-        style: Theme.of(context).textTheme.title,
+        style: Theme.of(context).textTheme.headline6,
       ),
     );
   }

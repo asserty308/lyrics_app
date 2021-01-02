@@ -7,7 +7,7 @@ class AllGenresModel {
 
   AllGenresModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<GenreDataModel>();
+      data = <GenreDataModel>[];
       json['data'].forEach((v) {
         data.add(new GenreDataModel.fromJson(v));
       });
