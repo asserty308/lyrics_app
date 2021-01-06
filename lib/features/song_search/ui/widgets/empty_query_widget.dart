@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_core/i18n/context_localization.dart';
 import 'package:flutter_core/routing/routing.dart';
-import 'package:lyrics/features/song_search/data/datasources/deezer_api.dart';
+import 'package:lyrics/features/song_search/data/datasources/song_search_api.dart';
 import 'package:lyrics/features/song_search/data/models/genre_data_model.dart';
 import 'package:lyrics/features/song_search/data/models/song_model.dart';
 import 'package:lyrics/features/song_search/ui/screens/charts_screen.dart';

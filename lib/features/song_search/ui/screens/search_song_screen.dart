@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyrics/features/song_search/data/datasources/deezer_api.dart';
+import 'package:lyrics/features/song_search/data/datasources/song_search_api.dart';
 import 'package:lyrics/features/song_search/ui/widgets/empty_query_widget.dart';
 import 'package:lyrics/features/song_search/ui/widgets/search_results_list.dart';
 import 'package:lyrics/features/song_search/ui/widgets/song_search_bar.dart';

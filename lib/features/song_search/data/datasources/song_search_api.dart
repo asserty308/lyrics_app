@@ -4,10 +4,10 @@ import 'package:lyrics/features/song_search/data/models/genre_data_model.dart';
 import 'package:lyrics/features/song_search/data/models/search_result_model.dart';
 import 'package:lyrics/features/song_search/data/models/song_model.dart';
 
-final deezerApi = DeezerApi();
+final deezerApi = SongSearchApi();
 
-class DeezerApi extends BaseApi {
-  DeezerApi() : super('api.deezer.com');
+class SongSearchApi extends BaseApi {
+  SongSearchApi() : super('api.deezer.com');
 
   Future<List<SongModel>> search(String query) async {
     final map = { 'q':query };
